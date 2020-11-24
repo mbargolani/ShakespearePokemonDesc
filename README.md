@@ -13,3 +13,7 @@ In order to run the application you need the following requisites:
 5) At least 2 GB RAM <br>
 6) A processor with at least 1Ghz  <br>
 7) Windows 7 SP1 or higher <br>
+
+The program uses two external APIs:<br>
+1) https://pokeapi.co/ for retrieving Pokemon information <br>
+2) https://funtranslations.com/api/shakespeare for translating to Shakespearean language<br>
