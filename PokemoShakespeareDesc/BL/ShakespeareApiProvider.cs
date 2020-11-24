@@ -13,11 +13,11 @@ namespace PokemonShakespeareDesc.BL
     /// </summary>
     public class ShakespeareApiProvider : IShakespeareApiProvider
     {
-        public static readonly string _baseUri = "https://api.funtranslations.com/translate/";
-
-        public static readonly string _shakespeareCommand = "shakespeare.json";
-
         private IHttpHelper _httpHelper;
+
+        public const string BaseUri = "https://api.funtranslations.com/translate/";
+
+        public const string ShakespeareCommand = "shakespeare.json";
 
         public ShakespeareApiProvider(IHttpHelper httpHelper)
         {
@@ -31,7 +31,7 @@ namespace PokemonShakespeareDesc.BL
                 { "text", text}
             };
 
-            var res = _httpHelper.Post(payload, $"{_baseUri}{_shakespeareCommand}").Result;
+            var res = _httpHelper.Post(payload, $"{BaseUri}{ShakespeareCommand}").Result;
 
             if (res == null) throw new NotFoundException($"Translation for pokemon's {name} description could not be retrieved");
 
