@@ -68,7 +68,7 @@ namespace PokemonShakespeareDesc.BL
         
     }
 
-    internal class TooManyRequestsException : Exception
+    public class TooManyRequestsException : Exception
     {
         public TooManyRequestsException(string msg) : base(msg)
         {

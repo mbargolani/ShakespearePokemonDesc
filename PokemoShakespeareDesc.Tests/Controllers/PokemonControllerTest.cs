@@ -6,9 +6,11 @@ using System.Net.Http;
 using System.Text;
 using System.Web.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using PokemonShakespeareDesc.BL;
 using PokemoShakespeareDesc;
 using PokemoShakespeareDesc.Controllers;
+using PokemoShakespeareDesc.Interfaces;
 using PokemoShakespeareDesc.Models;
 
 namespace PokemoShakespeareDesc.Tests.Controllers
@@ -68,8 +70,9 @@ namespace PokemoShakespeareDesc.Tests.Controllers
         [TestMethod]
         public void TooManyRequests()
         { // Arrange
-            var helper = new HttpHelper();
-            PokemonController controller = new PokemonController(new PokeApiProvider(helper), new ShakespeareApiProvider(helper))
+            var helper = new Mock<IHttpHelper>();
+            helper.Setup(c => c.Get(It.IsAny<string>())).Throws(new TooManyRequestsException("Too many requests test"));
+            PokemonController controller = new PokemonController(new PokeApiProvider(helper.Object), new ShakespeareApiProvider(helper.Object))
             {
                 Request = new System.Net.Http.HttpRequestMessage(),
                 Configuration = new HttpConfiguration()
@@ -84,7 +87,7 @@ namespace PokemoShakespeareDesc.Tests.Controllers
 
             var responseContent = result.Content.ReadAsAsync<string>().Result;
             Assert.IsTrue(responseContent != null);
-            Assert.IsTrue(result.StatusCode == HttpStatusCode.NotFound);
+            Assert.IsTrue(result.StatusCode == HttpStatusCode.ServiceUnavailable);
 
 
         }
